@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- plugin.xml file written by dynaTrace Client 3.0.0 -->
+<plugin>
+  <extension point="com.dynatrace.diagnostics.pdk.pluginconfig" id="com.dynatrace.diagnostics.plugins.DB2Plugin" name="DB2 Monitor Plugin">
+    <information>
+      <category value="" />
+      <description value="DB2 Monitor Plugin retrieves DB2 Performance measures from various tables on your DB2 Database" />
+      <supportlevel value="unsupported" />
+    </information>
+    <configuration>
+      <property key="dbName" label="dbName" type="string" description="Database Name" default="Sample" />
+      <property key="dbUsername" label="dbUsername" type="string" description="Username that is used to access the database. User needs to have sysmon authority and the performance counters must be enabled." default="" />
+      <property key="dbPassword" label="dbPassword" type="password" description="Password that is used to access the database." default="" />
+      <property key="dbPort" label="dbPort" type="string" description="DB2 Database Port" default="50001" />
+    </configuration>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitor" id="com.dynatrace.diagnostics.plugins.DB2Plugin.monitor" name="DB2 Monitor">
+    <plugin configid="com.dynatrace.diagnostics.plugins.DB2Plugin" class="com.dynatrace.diagnostics.plugins.DB2Plugin" />
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.DB2Plugin.metricgroup3" name="DB2 System">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.DB2Plugin.monitor">
+      <metric name="Connection Time" unit="ms" description="" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.DB2Plugin.metricgroup2" name="DB2 Sessions">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.DB2Plugin.monitor">
+      <metric defaultrate="purepath" name="Total Users" unit="number" description="Total Users - returned by:&#xD;&#xA;select COUNT(*) from sysibmadm.applications" />
+      <metric defaultrate="purepath" name="Synchronous Read Percent" unit="percent" description="Synchronous Read Percent from http://www.dbisoftware.com/blog/db2_performance.php?id=96&#xD;&#xA;&#xD;&#xA;Returns null if there is no activity - need to test." />
+      <metric defaultrate="purepath" name="Asynchronous Write Percent" unit="percent" description="Taken from http://www.dbisoftware.com/blog/db2_performance.php?id=117&#xD;&#xA;Seems to return NULL when there has been no data run - TEST" />
+      <metric defaultrate="purepath" name="Index Usage" unit="percent" description="Percent of SELECTs which have an index" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.DB2Plugin.metricgroup4" name="Lock Metrics">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.DB2Plugin.monitor">
+      <metric defaultrate="purepath" name="Deadlocks" unit="number" description="Deadlocks from:&#xD;&#xA;SELECT deadlocks FROM sysibmadm.snapdb" />
+      <metric defaultrate="purepath" name="Waitlocks" unit="number" description="Waitlocks from:&#xD;&#xA;SELECT lock_waits FROM sysibmadm.snapdb" />
+    </metricgroup>
+  </extension>
+</plugin>
+
