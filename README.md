@@ -8,5 +8,5 @@ transactions or slow database queries.
 
 Since this plugin is currently in BETA, please follow the best practice of having a separate collector for your monitoring plugins.
 
-Find further information in the [dynaTrace community](https://community.compuwareapm.com/community/display/DL/DB2+Monitor+Plugin) 
+Find further information in the [dynaTrace community](https://community.dynatrace.com/community/display/DL/DB2+Monitor+Plugin) 
 
